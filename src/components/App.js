@@ -11,11 +11,12 @@ class App extends React.Component {
 
     // ComponentDidMount() is a lifecycle method that is called after the component is rendered.
     async componentDidMount() {       
-        const baseUrl = "http://localhost:3002/movies"
+        const baseUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}&language=en-US&page=1`
         const response = await fetch(baseUrl)
-        const data = await response.json()    
-        console.log(data)
-        this.setState({movies: data})
+        const datax = await response.json()    
+        const result = datax.results
+        console.log(result)
+        this.setState({movies: result})
     }
 
     deleteMovie = async(movie) => {
@@ -44,7 +45,7 @@ class App extends React.Component {
     
         let filteredMovies = this.state.movies.filter(
             (movie) => {
-                return movie.name.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1
+                return movie.title.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1
             }
         )
 
